@@ -14,7 +14,6 @@
 ✅ **Local Persistence:** Store your data offline with Hive  
 ✅ **Modern UI:** Sleek, responsive design with intuitive navigation
 
-![BudgetCalc Demo](https://media.giphy.com/media/3o7aD2saalBwwftBIY/giphy.gif)
 
 ---
 
@@ -63,7 +62,6 @@
 
 1️⃣ **Clone the Repository**  
   
-    ```bash
       git clone https://github.com/yourusername/budgetcalc_expense_tracker.git
      cd expense_tracker
 
