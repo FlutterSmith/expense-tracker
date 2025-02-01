@@ -1,90 +1,52 @@
+import 'package:expense_tracker/localization/app_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../providers/expense_provider.dart';
 import 'main_screen.dart';
 
 class OnboardingScreen extends StatefulWidget {
-  const OnboardingScreen({Key? key}) : super(key: key);
-
+  final Function(Locale) setLocale;
+  final Function(ThemeMode) setThemeMode;
+  const OnboardingScreen(
+      {Key? key, required this.setLocale, required this.setThemeMode})
+      : super(key: key);
   @override
   State<OnboardingScreen> createState() => _OnboardingScreenState();
 }
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
-  bool _isLoading = true;
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await Provider.of<ExpenseProvider>(context, listen: false).loadExpenses();
-      setState(() {
-        _isLoading = false;
-      });
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF7F2FA),
-      body: _isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : SafeArea(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: 200,
-                    child: Image.asset(
-                      'assets/onboarding_wallet.png',
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  const Text(
-                    'Save your money with\nExpense Tracker',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF6F35A5),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 32),
-                    child: Text(
-                      'Track your daily expenses and income, and manage your budget with ease.',
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  const SizedBox(height: 40),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF6F35A5),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 50,
-                        vertical: 15,
-                      ),
-                    ),
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (_) => const MainScreen()),
-                      );
-                    },
-                    child: const Text(
-                      "Let's Start",
-                      style: TextStyle(fontSize: 18, color: Colors.white),
-                    ),
-                  ),
-                ],
+      body: Center(
+        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          Image.asset('assets/onboarding_wallet.png', height: 200),
+          Text(AppLocalizations.of(context)!.translate('welcome'),
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+          SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: () {
+              widget.setLocale(const Locale('en'));
+              widget.setThemeMode(ThemeMode.light);
+              Navigator.pushReplacement(
+                  context, MaterialPageRoute(builder: (_) => MainScreen()));
+            },
+            child: Text(AppLocalizations.of(context)!.translate('get_started')),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              widget.setLocale(const Locale('es'));
+              widget.setThemeMode(ThemeMode.dark);
+              Navigator.pushReplacement(
+                  context, MaterialPageRoute(builder: (_) => MainScreen()));
+            },
+            child: Text(
+              AppLocalizations.of(context)!.translate(
+                'get_started_spanish',
               ),
+              style: TextStyle(color: Colors.white, fontSize: 16),
             ),
+          ),
+        ]),
+      ),
     );
   }
 }
