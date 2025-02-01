@@ -6,10 +6,30 @@ import '../providers/expense_provider.dart';
 class OverviewScreen extends StatelessWidget {
   const OverviewScreen({Key? key}) : super(key: key);
 
+  Widget _statTile({
+    required String title,
+    required String value,
+    required Color color,
+  }) {
+    return Column(
+      children: [
+        Text(title, style: const TextStyle(fontSize: 16, color: Colors.grey)),
+        const SizedBox(height: 4),
+        Text(
+          value,
+          style: TextStyle(
+            fontSize: 18,
+            color: color,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final expenseProvider = Provider.of<ExpenseProvider>(context);
-
     return SafeArea(
       child: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -20,7 +40,6 @@ class OverviewScreen extends StatelessWidget {
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
-
             Card(
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
               elevation: 4,
@@ -29,10 +48,7 @@ class OverviewScreen extends StatelessWidget {
                 child: ExpenseBarChart(monthlyData: expenseProvider.monthlyExpenses),
               ),
             ),
-
             const SizedBox(height: 24),
-
-            // Additional Stats
             Card(
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
               elevation: 4,
@@ -67,23 +83,6 @@ class OverviewScreen extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-
-  Widget _statTile({required String title, required String value, required Color color}) {
-    return Column(
-      children: [
-        Text(title, style: const TextStyle(fontSize: 16, color: Colors.grey)),
-        const SizedBox(height: 4),
-        Text(
-          value,
-          style: TextStyle(
-            fontSize: 18,
-            color: color,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ],
     );
   }
 }

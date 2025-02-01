@@ -11,7 +11,6 @@ class TransactionList extends StatelessWidget {
     if (expenses.isEmpty) {
       return const Center(child: Text('No transactions yet.'));
     }
-
     return ListView.builder(
       itemCount: expenses.length,
       itemBuilder: (context, index) {

@@ -1,7 +1,7 @@
-import 'package:expenses_tracker/screens/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/expense_provider.dart';
+import 'main_screen.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({Key? key}) : super(key: key);
@@ -16,11 +16,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   void initState() {
     super.initState();
-    // Load initial expenses from Hive
-    Provider.of<ExpenseProvider>(context, listen: false)
-        .loadExpenses()
-        .then((_) {
-      setState(() => _isLoading = false);
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await Provider.of<ExpenseProvider>(context, listen: false).loadExpenses();
+      setState(() {
+        _isLoading = false;
+      });
     });
   }
 
@@ -34,11 +34,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                
                   SizedBox(
                     height: 200,
                     child: Image.asset(
-                      'assets/images/onboarding_wallet.png',
+                      'assets/onboarding_wallet.png',
                       fit: BoxFit.contain,
                     ),
                   ),
@@ -80,7 +79,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     },
                     child: const Text(
                       "Let's Start",
-                      style: TextStyle(fontSize: 18),
+                      style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
                   ),
                 ],

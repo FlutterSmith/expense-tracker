@@ -6,10 +6,30 @@ import '../providers/expense_provider.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
+  Widget _buildSummaryCard({
+    required String title,
+    required double amount,
+    required Color color,
+  }) {
+    return Column(
+      children: [
+        Text(
+          title,
+          style: const TextStyle(color: Colors.white70, fontSize: 14),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          '\$${amount.toStringAsFixed(2)}',
+          style: TextStyle(
+              color: color, fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final expenseProvider = Provider.of<ExpenseProvider>(context);
-
     return SafeArea(
       child: SingleChildScrollView(
         child: Column(
@@ -60,10 +80,9 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
             ),
-
-            // Transactions List Title
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16),
               child: Row(
                 children: const [
                   Text(
@@ -76,7 +95,6 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
             ),
-
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.5,
               child: TransactionList(expenses: expenseProvider.expenses),
@@ -84,26 +102,6 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildSummaryCard({
-    required String title,
-    required double amount,
-    required Color color,
-  }) {
-    return Column(
-      children: [
-        Text(
-          title,
-          style: const TextStyle(color: Colors.white70, fontSize: 14),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          '\$${amount.toStringAsFixed(2)}',
-          style: TextStyle(color: color, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-      ],
     );
   }
 }

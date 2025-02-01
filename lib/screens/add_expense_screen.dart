@@ -27,7 +27,9 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
       lastDate: DateTime.now(),
     );
     if (picked != null) {
-      setState(() => _selectedDate = picked);
+      setState(() {
+        _selectedDate = picked;
+      });
     }
   }
 
@@ -49,7 +51,6 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).colorScheme.primary;
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Add Expense'),
@@ -64,32 +65,27 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
               TextFormField(
                 controller: _titleController,
                 decoration: const InputDecoration(labelText: 'Expense Title'),
-                validator: (value) => (value == null || value.isEmpty)
-                    ? 'Please enter a title'
-                    : null,
+                validator: (value) =>
+                    (value == null || value.isEmpty) ? 'Please enter a title' : null,
               ),
               TextFormField(
                 controller: _amountController,
                 decoration: const InputDecoration(labelText: 'Amount'),
-                keyboardType:
-                    const TextInputType.numberWithOptions(decimal: true),
-                validator: (value) => (value == null || value.isEmpty)
-                    ? 'Please enter an amount'
-                    : null,
+                keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                validator: (value) =>
+                    (value == null || value.isEmpty) ? 'Please enter an amount' : null,
               ),
               TextFormField(
                 controller: _categoryController,
                 decoration: const InputDecoration(labelText: 'Category'),
-                validator: (value) => (value == null || value.isEmpty)
-                    ? 'Please enter a category'
-                    : null,
+                validator: (value) =>
+                    (value == null || value.isEmpty) ? 'Please enter a category' : null,
               ),
               TextFormField(
                 controller: _descriptionController,
                 decoration: const InputDecoration(labelText: 'Description'),
-                validator: (value) => (value == null || value.isEmpty)
-                    ? 'Please enter a description'
-                    : null,
+                validator: (value) =>
+                    (value == null || value.isEmpty) ? 'Please enter a description' : null,
               ),
               const SizedBox(height: 20),
               ListTile(
@@ -101,8 +97,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: primaryColor,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 40, vertical: 14),
+                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 14),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
